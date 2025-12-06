@@ -14,17 +14,19 @@ hardware.graphics.enable32Bit = true;
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  #--enable nixos flakes--
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
+  #enable fish shell
+  users.users.rida.shell = pkgs.fish;
+  programs.fish.enable = true;
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
-  networking.networkmanager.enable = true;
-
   # Set your time zone.
   time.timeZone = "Africa/Casablanca";
 
@@ -33,15 +35,13 @@ hardware.graphics.enable32Bit = true;
 
   # Enable the X11 windowing system.
 #  services.xserver.enable = true;
-  # Enable hyprland
-  programs.hyprland.enable = false;
+  # Enable niri
+#programs.niri.enable = true;
 #programs.hyprland.xwayland.enable = true;
 #programs.hyprland.withUWSM  = true;
 #environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
   # Enable the kde plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
+  services.displayManager.ly.enable = true;
   services.desktopManager.plasma6.enable = true;
 
 #zram enable
@@ -62,14 +62,7 @@ services.xserver = {
   };
 };
 
-  # Configure keymap in X11
-#  services.xserver.xkb = {
-#    layout = "us,ara";
-#    variant = "";
-#  };
-
   services.gvfs.enable = true;
-  services.udisks2.enable = true;
   services.tumbler.enable = true;
   services.fwupd.enable = true;
 
@@ -81,7 +74,6 @@ systemd.user.services.setxkbmap = {
   };
   wantedBy = [ "default.target" ];
 };
-
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -104,6 +96,9 @@ systemd.user.services.setxkbmap = {
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
+#nixpkgs.config.permittedInsecurePackages = [
+#  "mbedtls-2.28.10"
+#];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.rida = {
@@ -111,8 +106,14 @@ systemd.user.services.setxkbmap = {
     description = "rida";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
+
+librewolf
 thunderbird
+libreoffice
 neovim
+neovide
+helix
+tmux
 htop
 btop
 fastfetch
@@ -122,61 +123,43 @@ kitty
 wget
 uget
 gtk3
+nerd-fonts.noto
 pulseaudio
 lutris
+prismlauncher
+ffmpeg
 steam
 audacity
 gimp
 obs-studio
 inkscape
 gcc
+clang
+clang-tools
+bear
+glibc
+cmake
+ninja
 zig
+glow
+ripgrep
 discord
 localsend
-libreoffice
 kdePackages.kdenlive
-krunner-translator
 p7zip
-waybar
-rofi
-zsh
 nautilus
 gthumb
-vlc
-mpv
-rar
-unrar
-zip
-file-roller
-xz
-adwaita-icon-theme
+nerd-fonts.fira-code
 cmatrix
-grim
-tree
-spotify
-papirus-icon-theme
-clock-rs
-gvfs
-mtpfs
-simple-mtpfs
-udiskie
-usbutils
-psmisc
-xorg.setxkbmap
-libdrm
-steam-run
-pkgsi686Linux.mesa
-pkgsi686Linux.libdrm
-    ];
-  };
-
-  fonts.packages = with pkgs; [
-  nerd-fonts.fira-code
-  ];
-
+lazygit
+ncdu
+networkmanager
+bat
+vicinae
+];
+};
   # Install firefox.
   programs.firefox.enable = true;
-
   programs.nix-ld.enable = true;
 
   programs.appimage = {
@@ -195,9 +178,6 @@ networking.firewall.allowedUDPPorts = [ 1714 1715 1716 1717 1718 1719 ];
   # $ nix search wget
   environment.systemPackages = with pkgs; [
   adwaita-icon-theme
-  hicolor-icon-theme
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
   ];
 
 environment.pathsToLink = [ "/share/icons" "/share/applications" ];
@@ -206,7 +186,6 @@ environment.pathsToLink = [ "/share/icons" "/share/applications" ];
   GSK_RENDERER = "ngl";
 
 };
-
 programs.steam = {
   enable = true;
   remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
@@ -242,4 +221,3 @@ programs.steam = {
   system.stateVersion = "25.05"; # Did you read the comment?
 
 }
-
