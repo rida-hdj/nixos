@@ -1,1 +1,1 @@
-just a buckup for my OS:)
+just a buckup for my OS :)
