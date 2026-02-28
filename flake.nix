@@ -9,34 +9,29 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-};
+  };
   outputs =
-  inputs@{
+    inputs@{
       self,
       nixpkgs,
       home-manager,
       ...
     }:
-    let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; };
-    in
     {
-    nixosConfigurations = {
-      nixos = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-        modules = [
-          ./configuration.nix
-          home-manager.nixosModules.home-manager
-	 inputs.noctalia.nixosModules.default
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.rida = ./home.nix;
-
-          }
-        ];
-      };
+      nixosConfigurations = {
+        nixos = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./configuration.nix
+            home-manager.nixosModules.home-manager
+            inputs.noctalia.nixosModules.default
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.rida = ./home.nix;
+            }
+          ];
+        };
       };
     };
 }
