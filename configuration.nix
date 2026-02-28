@@ -1,48 +1,57 @@
 { config, pkgs, ... }:
-    
+
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+  ];
 
   hardware.graphics.enable32Bit = true;
-  
-  # Bootloader.
+
+  # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  #enable plymouth
+  #Enable plymouth
   boot.plymouth.enable = true;
-
   boot.initrd.systemd.enable = true;
-
   boot.plymouth.theme = "bgrt";
 
   boot.initrd.verbose = false;
   boot.consoleLogLevel = 0;
-  boot.kernelParams = [ "quiet" "splash" ];
+  boot.kernelParams = [
+    "quiet"
+    "splash"
+  ];
 
-  #kernel version
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  #Kernel version
+  boot.kernelPackages = pkgs.linuxPackages;
 
-  #--enable nixos flakes--
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  #--Enable nixos flakes--
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   networking.hostName = "nixos";
-  
-  #enable niri
+
+  #Enable niri
   programs.niri.enable = true;
   xdg.portal.enable = true;
 
-  #enable noctalia
+  #Enable noctalia
   services.noctalia-shell.enable = true;
 
-  #enable fish shell
+  #Enable fish shell
   users.users.rida.shell = pkgs.fish;
   programs.fish.enable = true;
 
-  # Set your time zone.
+  #Enable SSH
+  services.openssh.enable = true;
+
+  #Enable network manager
+  networking.networkmanager.enable = true;
+
+  # Set your time zone
   time.timeZone = "Africa/Casablanca";
 
   # Select internationalisation properties.
@@ -50,40 +59,26 @@
 
   # Enable DE & LM
   services.displayManager.ly.enable = true;
-  services.desktopManager.plasma6.enable = true;
+  services.desktopManager.plasma6.enable = false;
 
-#zram enable
-zramSwap = {
-  enable = true;
-  algorithm = "zstd";
-  memoryPercent = 80;
-};
-
-
-services.xserver = {
-  enable = true;
-  xkb = {
-    layout = "us,ara";
-    variant = "";
-    options = "grp:super_space_toggle";
+  #Enable zram
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    memoryPercent = 80;
   };
-};
+
+  #Enable xserver
+  services.xserver = {
+    enable = true;
+  };
 
   services.fwupd.enable = true;
-
-systemd.user.services.setxkbmap = {
-  description = "Set keyboard layout for Hyprland";
-  serviceConfig = {
-    ExecStart = "${pkgs.xorg.setxkbmap}/bin/setxkbmap us,ara -option grp:super_space_toggle";
-    RemainAfterExit = true;
-  };
-  wantedBy = [ "default.target" ];
-};
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Enable sound with pipewire.
+  # Enable sound with pipewire
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -92,128 +87,160 @@ systemd.user.services.setxkbmap = {
     alsa.support32Bit = true;
     pulse.enable = true;
   };
-  
+
+  #Enable file manager extras
+  services.gvfs.enable = true;
+  services.tumbler.enable = true;
+
+  #Enable gnome disks
+  programs.gnome-disks.enable = true;
+  services.udisks2.enable = true;
+
   users.users.rida = {
     isNormalUser = true;
     description = "rida";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
     packages = with pkgs; [
 
-librewolf
-brave
-thunderbird
-libreoffice
-nerd-fonts.jetbrains-mono
-neovim
-neovide
-helix
-vscodium
-tmux
-starship
-htop
-btop
-fastfetch
-git
-fd
-lsd
-clock-rs
-gnome-calculator
-nodejs
-lua-language-server
-pyright
-rust-analyzer
-nodePackages.vscode-langservers-extracted
-nodePackages.typescript-language-server
-kitty
-wget
-uget
-gtk3
-nerd-fonts.noto
-pulseaudio
-lutris
-prismlauncher
-ffmpeg
-steam
-audacity
-gimp
-obs-studio
-inkscape
-gcc
-clang
-clang-tools
-bear
-glibc
-cmake
-ninja
-zig
-glow
-ripgrep
-discord
-localsend
-kdePackages.kdenlive
-p7zip
-nautilus
-gthumb
-nerd-fonts.fira-code
-cmatrix
-lazygit
-yazi
-termusic
-ncdu
-networkmanager
-bat
-vicinae
-adwaita-icon-theme
-xwayland-satellite
-alsa-utils
-xdg-desktop-portal-gnome
-xdg-desktop-portal-gtk
-wl-clipboard-x11
-wl-clipboard
-#jellyfin-media-player
-jellyfin-ffmpeg
-];
-};
-  # Install firefox.
-  programs.firefox.enable = true;
+      brave
+      thunderbird
+      libreoffice
+      kdePackages.kdenlive
+      mpv
+      yt-dlp
+      cava
+      vim
+      fzf
+      lutris
+      pcsx2
+      mangohud
+      tmux
+      htop
+      btop
+      fastfetch
+      git
+      aria2
+      docker-compose
+      fd
+      lsd
+      tree
+      clock-rs
+      gnome-calculator
+      nodejs
+      kitty
+      foot
+      wget
+      jdk21_headless
+      ffmpeg
+      glibc
+      audacity
+      obs-studio
+      gcc
+      clang
+      clang-tools
+      cmake
+      glow
+      ripgrep
+      discord
+      fluffychat
+      element-desktop
+      cinny
+      telegram-desktop
+      localsend
+      p7zip
+      nautilus
+      gthumb
+      cmatrix
+      lazygit
+      yazi
+      ncdu
+      bat
+      vicinae
+      xwayland-satellite
+      alsa-utils
+      xdg-desktop-portal-gnome
+      xdg-desktop-portal-gtk
+      wl-clipboard
+      jellyfin-ffmpeg
+      noti
+      nwg-look
+      caligula
+      android-tools
+      python3
+      lzip
+    ];
+  };
+
+  #Enable nix-ld
   programs.nix-ld.enable = true;
-  #enable appimage.
+
+  #Enable appimage
   programs.appimage = {
- enable = true;
- binfmt = true;
- };
+    enable = true;
+    binfmt = true;
+  };
 
-  #enable kde connect.
-programs.kdeconnect.enable = true;
-networking.firewall.allowedTCPPorts = [ 1714 1715 1716 1717 1718 1719 ];
-networking.firewall.allowedUDPPorts = [ 1714 1715 1716 1717 1718 1719 ];
+  #Enable firewall
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [
+      53317
+      25565
+      30000
+    ];
+    allowedUDPPorts = [
+      53317
+      25565
+      30000
+    ];
+  };
 
-  # Allow unfree packages
+  #Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs; [
+  environment.pathsToLink = [
+    "/share/icons"
+    "/share/applications"
   ];
 
-environment.pathsToLink = [ "/share/icons" "/share/applications" ];
-
   environment.variables = {
-  GSK_RENDERER = "ngl";
+    GSK_RENDERER = "ngl";
 
-};
-  #enable steam
-programs.steam = {
-  enable = true;
-  remotePlay.openFirewall = true;
-  dedicatedServer.openFirewall = true; 
-  localNetworkGameTransfers.openFirewall = true; 
-};
+  };
 
-  #enable jellyfin
-  services.jellyfin = {
+  #Enable flatpak
+  services.flatpak.enable = true;
+
+  #Enable steam
+  programs.steam = {
     enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+    localNetworkGameTransfers.openFirewall = true;
+  };
+
+  #Enable jellyfin
+  services.jellyfin = {
+    enable = false;
     openFirewall = true;
   };
-  systemd.services.jellyfin.wantedBy = [];
+
+  #Enable docker
+  virtualisation.docker = {
+    enable = false;
+    daemon.settings = {
+      "default-address-pools" = [
+        {
+          base = "172.27.0.0/16";
+          size = 24;
+        }
+      ];
+    };
+  };
 
   system.stateVersion = "25.05";
 
