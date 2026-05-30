@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   imports = [
@@ -8,23 +13,47 @@
   hardware.graphics.enable32Bit = true;
 
   # Bootloader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    grub = {
+      enable = true;
+      device = "nodev";
+      efiSupport = true;
+      gfxmodeBios = "1280x1024";
+      gfxmodeEfi = "1280x1024";
+      gfxpayloadBios = "keep";
+      gfxpayloadEfi = "keep";
+      theme = pkgs.catppuccin-grub.override {
+        flavor = "mocha";
+      };
+    };
+    efi.canTouchEfiVariables = true;
+  };
 
   #Enable plymouth
-  boot.plymouth.enable = true;
-  boot.initrd.systemd.enable = true;
-  boot.plymouth.theme = "bgrt";
-
-  boot.initrd.verbose = false;
-  boot.consoleLogLevel = 0;
-  boot.kernelParams = [
-    "quiet"
-    "splash"
-  ];
-
+  /*
+    boot = {
+      plymouth = {
+        enable = true;
+        theme = "catppuccin-mocha";
+        themePackages = with pkgs; [
+          (catppuccin-plymouth.override {
+            variant = "mocha";
+          })
+        ];
+      };
+      initrd.kernelModules = [ "i915" ];
+      initrd.systemd.enable = true;
+      initrd.verbose = false;
+      consoleLogLevel = 0;
+      kernelParams = [
+        "quiet"
+        "splash"
+        "video=1280x1024"
+      ];
+    };
+  */
   #Kernel version
-  boot.kernelPackages = pkgs.linuxPackages;
+  boot.kernelPackages = pkgs.linuxPackages_zen;
 
   #--Enable nixos flakes--
   nix.settings.experimental-features = [
@@ -36,20 +65,34 @@
 
   #Enable niri
   programs.niri.enable = true;
-  xdg.portal.enable = true;
 
-  #Enable noctalia
-  services.noctalia-shell.enable = true;
+  #Enable kde
+  services.desktopManager.plasma6 = {
+    enable = false;
+  };
+
+  #Enable kde connect
+  programs.kdeconnect.enable = true;
 
   #Enable fish shell
   users.users.rida.shell = pkgs.fish;
   programs.fish.enable = true;
+  users.motd = "";
+  users.motdFile = null;
+
+  security.pam.services.sshd.showMotd = lib.mkForce false;
 
   #Enable SSH
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+  };
 
   #Enable network manager
   networking.networkmanager.enable = true;
+  systemd.services.NetworkManager-wait-online.enable = false;
+
+  #Enable tailscale
+  services.tailscale.enable = true;
 
   # Set your time zone
   time.timeZone = "Africa/Casablanca";
@@ -57,13 +100,12 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # Enable DE & LM
-  services.displayManager.ly.enable = true;
-  services.desktopManager.plasma6.enable = false;
+  # Enable DM
+  services.displayManager.gdm.enable = true;
 
   #Enable zram
   zramSwap = {
-    enable = true;
+    enable = false;
     algorithm = "zstd";
     memoryPercent = 80;
   };
@@ -74,6 +116,9 @@
   };
 
   services.fwupd.enable = true;
+
+  #Enable dbus
+  services.dbus.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -103,20 +148,23 @@
       "networkmanager"
       "wheel"
       "docker"
+      "input"
     ];
     packages = with pkgs; [
 
       brave
       thunderbird
-      libreoffice
       drawy
+      foliate
+      adw-gtk3
       kdePackages.kdenlive
-      mpv
-      yt-dlp
+      #mpv
+      celluloid
+      vlc
       cava
       vim
+      zed-editor
       fzf
-      lutris
       pcsx2
       mangohud
       tmux
@@ -125,7 +173,8 @@
       fastfetch
       git
       aria2
-      opencode
+      ethtool
+      # opencode
       docker-compose
       fd
       lsd
@@ -134,7 +183,10 @@
       gnome-calculator
       nodejs
       kitty
+      luajitPackages.magick
+      lua
       foot
+      ghostty
       wezterm
       wget
       jdk21_headless
@@ -142,6 +194,8 @@
       glibc
       audacity
       obs-studio
+      oklch-color-picker
+      inkscape
       gcc
       clang
       clang-tools
@@ -149,10 +203,6 @@
       glow
       ripgrep
       discord
-      fluffychat
-      element-desktop
-      cinny
-      telegram-desktop
       localsend
       p7zip
       nautilus
@@ -161,12 +211,13 @@
       lazygit
       yazi
       ncdu
+      dysk
+      lsof
       bat
       vicinae
       xwayland-satellite
       alsa-utils
-      xdg-desktop-portal-gnome
-      xdg-desktop-portal-gtk
+      wireplumber
       wl-clipboard
       jellyfin-ffmpeg
       noti
@@ -177,9 +228,22 @@
       lzip
       wineWow64Packages.waylandFull
       nftables
+      xdg-desktop-portal
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-gnome
+      xclicker
+      noctalia-shell
+      onlyoffice-desktopeditors
+      keepassxc
+      tailscale
+      blanket
+      krita
     ];
   };
 
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+  ];
   #Enable nix-ld
   programs.nix-ld.enable = true;
 

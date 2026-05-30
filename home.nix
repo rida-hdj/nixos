@@ -15,13 +15,10 @@
   home.sessionVariables = {
   };
   imports = [
-    ./modules/fish.nix
     ./modules/nh.nix
-    ./modules/neovim.nix
   ];
 
   home.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
     papirus-icon-theme
     nil
     lua-language-server
@@ -30,6 +27,14 @@
     typescript-language-server
     vscode-langservers-extracted
     pyright
-    emmet-ls
+    rust-analyzer
+    tree-sitter
+    luarocks
+    cargo
+    rustc
+    rustfmt
+    mdbook
+    neovim
+    imagemagick
   ];
 }
