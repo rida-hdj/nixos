@@ -101,7 +101,7 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   # Enable DM
-  services.displayManager.gdm.enable = true;
+  services.displayManager.ly.enable = true;
 
   #Enable zram
   zramSwap = {
@@ -113,6 +113,17 @@
   #Enable xserver
   services.xserver = {
     enable = true;
+  };
+
+  #Enable xdg-desktop-portal
+  xdg.portal = {
+    enable = true;
+
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+    ];
+
+    config.common.default = "gtk";
   };
 
   services.fwupd.enable = true;
@@ -174,7 +185,7 @@
       git
       aria2
       ethtool
-      # opencode
+      opencode
       docker-compose
       fd
       lsd
@@ -206,6 +217,7 @@
       localsend
       p7zip
       nautilus
+      gnome-clocks
       gthumb
       cmatrix
       lazygit
@@ -230,7 +242,6 @@
       nftables
       xdg-desktop-portal
       xdg-desktop-portal-gtk
-      xdg-desktop-portal-gnome
       xclicker
       noctalia-shell
       onlyoffice-desktopeditors
@@ -238,6 +249,17 @@
       tailscale
       blanket
       krita
+      fast-cli-zig
+      typer
+      ttyper
+      tt
+      toipe
+      smassh
+      typioca
+      typtea
+      kdePackages.marknote
+      bookup
+      mkdocs
     ];
   };
 
