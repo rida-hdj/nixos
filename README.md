@@ -6,12 +6,21 @@ Personal NixOS configuration using flakes, home-manager, and an unstable channel
 
 | Path | Description |
 |------|-------------|
-| `configuration.nix` | Main system configuration |
 | `flake.nix` | Flake entry point |
-| `home.nix` | Home-manager user config |
+| `configuration.nix` | Main system configuration |
 | `hardware-configuration.nix` | Auto-generated hardware config |
-| `modules/` | Custom Nix modules |
-| `home-server/` | Server configuration (WIP) |
+| `home.nix` | Home-manager user config |
+| `modules/` | Modular NixOS config (boot, desktop, networking, etc.) |
+| `modules/boot.nix` | Bootloader and kernel parameters |
+| `modules/desktop.nix` | Desktop environment |
+| `modules/networking.nix` | Network configuration and firewall |
+| `modules/nh.nix` | nh (nix helper) configuration |
+| `modules/security.nix` | Security hardening and polkit |
+| `modules/services.nix` | System services (pipewire, printing, etc.) |
+| `modules/users.nix` | User groupe and system `packages` |
+| `modules/virtualisation.nix` | Docker, ... |
+| `home-server/` | Server configuration |
+| `home-server/jellyfin.nix` | Jellyfin media server |
 
 ## Highlights
 
