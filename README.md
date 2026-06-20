@@ -17,7 +17,7 @@ Personal NixOS configuration using flakes, home-manager, and an unstable channel
 | `modules/nh.nix` | nh (nix helper) configuration |
 | `modules/security.nix` | Security hardening and polkit |
 | `modules/services.nix` | System services (pipewire, printing, etc.) |
-| `modules/users.nix` | User groupe and system `packages` |
+| `modules/users.nix` | User groups and system `packages` |
 | `modules/virtualisation.nix` | Docker, ... |
 | `home-server/` | Server configuration |
 | `home-server/jellyfin.nix` | Jellyfin media server |
