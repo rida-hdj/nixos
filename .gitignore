@@ -2,6 +2,7 @@
 # Copy hardware-configuration.nix.example to hardware-configuration.nix and
 # replace the placeholder UUIDs with your own (`lsblk -f`).
 /hardware-configuration.nix
+/flake.lock
 
 # Local build/scratch artifacts
 result
