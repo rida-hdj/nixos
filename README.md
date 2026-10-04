@@ -8,7 +8,7 @@ Personal NixOS configuration using flakes, home-manager, and an unstable channel
 |------|-------------|
 | `flake.nix` | Flake entry point |
 | `configuration.nix` | Main system configuration |
-| `hardware-configuration.nix` | Auto-generated hardware config |
+| `hardware-configuration.nix.example` | Template for the auto-generated hardware config (real file is gitignored) |
 | `home.nix` | Home-manager user config |
 | `modules/` | Modular NixOS config (boot, desktop, networking, etc.) |
 | `modules/boot.nix` | Bootloader and kernel parameters |
