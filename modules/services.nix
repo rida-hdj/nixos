@@ -6,7 +6,7 @@
 
   #Enable zram
   zramSwap = {
-    enable = false;
+    enable = true;
     algorithm = "zstd";
     memoryPercent = 80;
   };

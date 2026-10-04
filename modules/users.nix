@@ -5,9 +5,9 @@
 
 {
 
-  users.users.rida = {
+  users.users.your-username = {
     isNormalUser = true;
-    description = "rida";
+    description = "your-username";
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -30,7 +30,6 @@
       vim
       zed-editor
       fzf
-      pcsx2
       mangohud
       tmux
       htop
@@ -47,11 +46,9 @@
       clock-rs
       gnome-calculator
       nodejs
-      kitty
       luajitPackages.magick
       lua
       foot
-      ghostty
       wezterm
       wget
       jdk21_headless
@@ -65,6 +62,7 @@
       clang
       clang-tools
       cmake
+      gnumake
       glow
       ripgrep
       discord
@@ -98,24 +96,19 @@
       xdg-desktop-portal
       xdg-desktop-portal-gtk
       xclicker
-      noctalia-shell
+      noctalia
       onlyoffice-desktopeditors
       keepassxc
       tailscale
       blanket
       krita
       fast-cli-zig
-      typer
-      ttyper
-      tt
-      toipe
-      smassh
-      typioca
-      typtea
-      kdePackages.marknote
-      bookup
       mkdocs
+      wooz
+      pkg-config
+      alsa-lib
       obsidian
+      newsflash
     ];
   };
 
@@ -124,7 +117,7 @@
   ];
 
   #Enable fish shell
-  users.users.rida.shell = pkgs.fish;
+  users.users.your-username.shell = pkgs.fish;
   programs.fish.enable = true;
   users.motd = "";
   users.motdFile = null;

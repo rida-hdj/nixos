@@ -4,8 +4,8 @@
 }:
 
 {
-  home.username = "rida";
-  home.homeDirectory = "/home/rida";
+  home.username = "your-username";
+  home.homeDirectory = "/home/your-username";
 
   home.stateVersion = "25.11";
 

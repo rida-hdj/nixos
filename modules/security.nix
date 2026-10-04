@@ -5,7 +5,7 @@
 {
 
   # Set your time zone
-  time.timeZone = "Africa/Casablanca";
+  time.timeZone = "UTC";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
