@@ -5,9 +5,9 @@
 
 {
 
-  users.users.your-username = {
+  users.users.rida = {
     isNormalUser = true;
-    description = "your-username";
+    description = "rida";
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -39,6 +39,7 @@
       aria2
       ethtool
       opencode
+      pi-coding-agent
       docker-compose
       fd
       lsd
@@ -109,6 +110,9 @@
       alsa-lib
       obsidian
       newsflash
+      osu-lazer-bin
+      cloudflared
+      zola
     ];
   };
 
@@ -117,7 +121,7 @@
   ];
 
   #Enable fish shell
-  users.users.your-username.shell = pkgs.fish;
+  users.users.rida.shell = pkgs.fish;
   programs.fish.enable = true;
   users.motd = "";
   users.motdFile = null;

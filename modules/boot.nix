@@ -17,9 +17,7 @@
       gfxmodeEfi = "1280x1024";
       gfxpayloadBios = "keep";
       gfxpayloadEfi = "keep";
-      theme = pkgs.catppuccin-grub.override {
-        flavor = "mocha";
-      };
+      theme = pkgs.minimal-grub-theme;
     };
     efi.canTouchEfiVariables = true;
   };

@@ -25,16 +25,16 @@
   };
 
   #Enable xdg-desktop-portal
-  xdg.portal = {
-    enable = true;
-    xdgOpenUsePortal = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gnome
-      xdg-desktop-portal-gtk
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = with pkgs; [
+    xdg-desktop-portal-gnome
+    xdg-desktop-portal-gtk
+  ];
+  xdg.portal.config.niri = {
+    default = [
+      "gnome"
+      "gtk"
     ];
-    config = {
-      common.default = [ "gnome" ];
-    };
   };
 
 }

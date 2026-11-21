@@ -4,16 +4,16 @@
 }:
 
 {
-  home.username = "your-username";
-  home.homeDirectory = "/home/your-username";
+  home.username = "rida";
+  home.homeDirectory = "/home/rida";
 
-  home.stateVersion = "25.11";
+  home.stateVersion = "26.05";
 
   programs.home-manager.enable = true;
   home.sessionVariables = {
   };
   imports = [
-    ./modules/nh.nix
+
   ];
 
   home.packages = with pkgs; [
