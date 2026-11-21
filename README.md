@@ -20,12 +20,11 @@ Personal NixOS configuration using flakes, home-manager, and an unstable channel
 | `modules/users.nix` | User groups and system `packages` |
 | `modules/virtualisation.nix` | Docker, ... |
 | `home-server/` | Server configuration |
-| `home-server/jellyfin.nix` | Jellyfin media server |
 
 ## Highlights
 
 - **DE/WM**: [niri](https://github.com/YaLTeR/niri) compositor + Ly display manager
-- **Boot**: GRUB with Catppuccin Mocha theme, Zen kernel
+- **Boot**: GRUB , Zen kernel
 - **Shell**: Fish
 - **Services**: Tailscale, SSH, Docker, Pipewire, Flatpak, Steam
 - **Stack**: Flakes + Home Manager, `nixos-unstable` channel
